@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { counriesSelector, fetchCountries } from "./store/countries/slice/countries.slice";
 import { CountryRecordIntreface } from "./store/countries/types/CountryRecordInterface";
+import {Button} from "@/components/ui/button";
 
 // export const metadata = {
 //   title: "App Router",
@@ -22,6 +23,8 @@ export default function Page() {
   },[filter]);
 
   return  <>
-  {countries && countries.length && countries.map((country: CountryRecordIntreface) => <div>{country.name}</div>)}
+    <Button variant="outline">test</Button>
+  <div className="text-3xl font-bold underline">tailwind</div>
+  {/*{countries && countries.length && countries.map((country: CountryRecordIntreface) => <div>{country.name}</div>)}*/}
   </>
 }
