@@ -1,12 +1,8 @@
 'use client'
-import { useDispatch } from "react-redux";
-import { countriesActions, countriesReducer } from "./store/countries/slice/countries.slice";
-import StoreProvider from "./StoreProvider";
-import { useEffect } from "react";
-import { AppDispatch } from "./lib/store";
-import { useAppDispatch } from "./lib/hooks";
-import { CaseReducerActions } from "@reduxjs/toolkit";
-import { fetchCountries } from "./store/countries/slice/countries.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { counriesSelector, fetchCountries } from "./store/countries/slice/countries.slice";
+import { CountryRecordIntreface } from "./store/countries/types/CountryRecordInterface";
 
 // export const metadata = {
 //   title: "App Router",
@@ -17,11 +13,15 @@ export default function Page() {
   // const dispatch: AppDispatch = useAppDispatch();
   const dispatch = useDispatch();
 
+  const [filter, setFilter] = useState([]);
+  const countries: Array<CountryRecordIntreface> = useSelector(counriesSelector);
+
   useEffect(() => {
     // @ts-ignore
     dispatch(fetchCountries(['AA']))
-  },[]);
+  },[filter]);
 
-  return <h1>App Router</h1>
-
+  return  <>
+  {countries && countries.length && countries.map((country: CountryRecordIntreface) => <div>{country.name}</div>)}
+  </>
 }

@@ -1,6 +1,6 @@
 import { TwoCapitalLettersType } from "@/types/TwoCapitalLettersType";
 
 export interface CountryRecordIntreface {
-    country: string;
+    name: string;
     code: TwoCapitalLettersType;
 };

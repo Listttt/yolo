@@ -3,12 +3,14 @@ import { CountriesReducers } from "./reducers/CountriesReducers";
 import {state as initialState} from './state/state';
 import { TwoCapitalLettersType } from "@/types/TwoCapitalLettersType";
 import { AsyncThunkConfig } from "node_modules/@reduxjs/toolkit/dist/createAsyncThunk";
+import { CountriesStateInterface } from "../types/CountryStateInterface";
+import { CountryRecordIntreface } from "../types/CountryRecordInterface";
+import { AsyncThunk } from "@reduxjs/toolkit/react";
 
-export const fetchCountries = createAsyncThunk(
+export const fetchCountries: AsyncThunk<void, Array<TwoCapitalLettersType>, AsyncThunkConfig> = createAsyncThunk(
     "countries/fetchCounries", async (codes: Array<TwoCapitalLettersType>, { dispatch }: GetThunkAPI<AsyncThunkConfig>) => {
-        debugger;
         // TODO: modyfy query string
-        const resp = await fetch('https://countries.trevorblades.com/', {
+        const req = await fetch('https://countries.trevorblades.com/', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -18,11 +20,11 @@ export const fetchCountries = createAsyncThunk(
             })
         });
 
-        const data = await resp.json();
+        const resp = await req.json();
 
         const {addCountries} = countriesActions;
         //@ts-ignore
-        dispatch(addCountries(data));
+        dispatch(addCountries(resp.data.countries));
     }
 )
 
@@ -33,6 +35,12 @@ const countriesSlice = createSlice({
         ...CountriesReducers,
     },
 });
+
+export const counriesSelector = (state: CountriesStateInterface): Array<CountryRecordIntreface> => {
+    debugger;
+    //@ts-ignore
+    return state.countries.countries;
+};
 
 export const countriesActions = countriesSlice.actions;
 export const countriesReducer = countriesSlice.reducer;
