@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { counriesSelector, fetchCountries } from "./store/countries/slice/countries.slice";
 import { CountryRecordIntreface } from "./store/countries/types/CountryRecordInterface";
-import {Button} from "@/components/ui/button";
+import {DataTable} from "@/components/ui/datatable";
+import {ColumnDef} from "@tanstack/react-table";
+import {Card} from "@/components/ui/card";
 
-// export const metadata = {
-//   title: "App Router",
-// };
 type TODO = any;
 export default function Page() {
   // const {fetchCountries}: CaseReducerActions<TODO, 'countries'> = countriesActions;
@@ -22,9 +21,22 @@ export default function Page() {
     dispatch(fetchCountries(['AA']))
   },[filter]);
 
+  const columns: Array<ColumnDef<CountryRecordIntreface>> = [
+    {
+      accessorKey: "code",
+      header: "code"
+    },
+    {
+      accessorKey: "name",
+      header: "country"
+    }
+  ];
+
   return  <>
-    <Button variant="outline">test</Button>
-  <div className="text-3xl font-bold underline">tailwind</div>
-  {/*{countries && countries.length && countries.map((country: CountryRecordIntreface) => <div>{country.name}</div>)}*/}
+    <div className="flex justify-center">
+      <Card className="w-[350px] p-8 bg-secondary">
+        <DataTable columns={columns} data={countries as unknown as Array<CountryRecordIntreface>}/>
+      </Card>
+    </div>
   </>
 }
