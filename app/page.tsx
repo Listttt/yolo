@@ -6,14 +6,16 @@ import { useEffect } from "react";
 import { AppDispatch } from "./lib/store";
 import { useAppDispatch } from "./lib/hooks";
 import { CaseReducerActions } from "@reduxjs/toolkit";
+import { fetchCountries } from "./store/countries/slice/countries.slice";
 
 // export const metadata = {
 //   title: "App Router",
 // };
 type TODO = any;
 export default function Page() {
-  const {fetchCountries}: CaseReducerActions<TODO, 'countries'> = countriesActions;
-  const dispatch: AppDispatch = useAppDispatch();
+  // const {fetchCountries}: CaseReducerActions<TODO, 'countries'> = countriesActions;
+  // const dispatch: AppDispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // @ts-ignore
