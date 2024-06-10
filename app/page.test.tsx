@@ -6,6 +6,16 @@ import Page from "./page";
 import StoreProvider from "./StoreProvider";
 
 describe('Main page', () => {
+    it.only("renders homepage unchanged", () => {
+        const { container } = render(
+            <StoreProvider>
+                <Page/>
+            </StoreProvider>
+        );
+
+        expect(container).toMatchSnapshot();
+    });
+
     it.only('contains DataTable', () => {
         render(
             <StoreProvider>
