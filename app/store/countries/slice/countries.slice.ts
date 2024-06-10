@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, GetThunkAPI } from "@reduxjs/toolkit";
 import { CountriesReducers } from "./reducers/CountriesReducers";
 import {state as initialState} from './state/state';
-import { TwoCapitalLettersType } from "@/types/TwoCapitalLettersType";
 import { AsyncThunkConfig } from "node_modules/@reduxjs/toolkit/dist/createAsyncThunk";
 import { CountriesStateInterface } from "../types/CountryStateInterface";
 import { CountryRecordIntreface } from "../types/CountryRecordInterface";
