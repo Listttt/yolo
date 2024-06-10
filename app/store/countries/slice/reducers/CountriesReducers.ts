@@ -1,10 +1,6 @@
-import { createAsyncThunk, GetThunkAPI, PayloadAction, UnknownAction } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { CountriesStateInterface } from "../../types/CountryStateInterface";
 import { CountryRecordIntreface } from "../../types/CountryRecordInterface";
-import { TwoCapitalLettersType } from "@/types/TwoCapitalLettersType";
-import { PayloadActionInterface } from "@/types/rtk/PayloadActionInteface";
-import { AsyncThunkConfig } from "node_modules/@reduxjs/toolkit/dist/createAsyncThunk";
-import { countriesActions } from "../countries.slice";
 
 
 
