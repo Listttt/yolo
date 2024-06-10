@@ -5,7 +5,7 @@ import { render, screen } from "@testing-library/react";
 import Page from "./page";
 import StoreProvider from "./StoreProvider";
 
-describe.only('Main page', () => {
+describe('Main page', () => {
     it.only('contains DataTable', () => {
         render(
             <StoreProvider>
@@ -19,5 +19,5 @@ describe.only('Main page', () => {
     it.skip('dispatches "fetchCountries" action', () => {
     });
 
-    it.skip('gets countries from store');
+    it.todo('gets countries from store');
 });
