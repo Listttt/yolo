@@ -1,7 +1,7 @@
 'use client'
 import {useSelector} from "react-redux";
 import React, {useEffect } from "react";
-import { counriesSelector, fetchCountries } from "./store/countries/slice/countries.slice";
+import { countriesSelector, fetchCountries } from "./store/countries/slice/countries.slice";
 import { CountryRecordIntreface } from "./store/countries/types/CountryRecordInterface";
 import {DataTable} from "@/components/ui/datatable";
 import {ColumnDef} from "@tanstack/react-table";
@@ -18,7 +18,7 @@ export default function Page() {
   // TODO: move to separate config
   const columns: Array<ColumnDef<CountryRecordIntreface> & {filterColumn?: boolean}> = TABLE_CONFIG;
 
-  const countries: Array<CountryRecordIntreface> = useSelector(counriesSelector);
+  const countries: Array<CountryRecordIntreface> = useSelector(countriesSelector);
 
   useEffect(() => {
     // @ts-ignore

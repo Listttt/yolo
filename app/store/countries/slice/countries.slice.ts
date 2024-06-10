@@ -1,4 +1,10 @@
-import { createAsyncThunk, createSlice, GetThunkAPI } from "@reduxjs/toolkit";
+import {
+    ActionCreatorWithoutPayload,
+    ActionReducerMapBuilder,
+    createAsyncThunk,
+    createSlice,
+    GetThunkAPI
+} from "@reduxjs/toolkit";
 import { CountriesReducers } from "./reducers/CountriesReducers";
 import {state as initialState} from './state/state';
 import { AsyncThunkConfig } from "node_modules/@reduxjs/toolkit/dist/createAsyncThunk";
@@ -7,9 +13,9 @@ import { CountryRecordIntreface } from "../types/CountryRecordInterface";
 import { AsyncThunk } from "@reduxjs/toolkit/react";
 
 export const fetchCountries: AsyncThunk<void, void, AsyncThunkConfig> = createAsyncThunk<void, void, AsyncThunkConfig>(
-    "countries/fetchCounries", async (_, { dispatch }: GetThunkAPI<AsyncThunkConfig>) => {
+    "countries/fetchCountries", async (_, { dispatch }: GetThunkAPI<AsyncThunkConfig>) => {
         //TODO: service
-        const req = await fetch('https://countries.trevorblades.com/', {
+        const response = await fetch('https://countries.trevorblades.com/', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -17,27 +23,28 @@ export const fetchCountries: AsyncThunk<void, void, AsyncThunkConfig> = createAs
             body: JSON.stringify({
                 query: `{\n  countries {\n    name\n    code\n  }\n}`
             })
-        });
+       }).then(data => data.json() );
 
-        const resp = await req.json();
-
-        const {addCountries} = countriesActions;
-        //@ts-ignore
-        dispatch(addCountries(resp.data.countries));
+        return response.data.countries;
     }
 )
-
-const countriesSlice = createSlice({
+type TODO_CLARIFY = any;
+const countriesSlice  = createSlice({
     name: "countries",
     initialState,
     reducers: {
         ...CountriesReducers,
     },
+    extraReducers: (builder: ActionReducerMapBuilder<CountriesStateInterface>): void => {
+        builder.addCase(fetchCountries.fulfilled, (state, action: TODO_CLARIFY ): TODO_CLARIFY => {
+            return state.countries?.concat(action.payload) as unknown as Array<CountryRecordIntreface>
+        })
+    }
 });
 
-export const counriesSelector = (state: CountriesStateInterface): Array<CountryRecordIntreface> => {
-    //@ts-ignore
-    return state.countries.countries;
+export const countriesSelector = (state: CountriesStateInterface): Array<CountryRecordIntreface> => {
+    return state.countries;
+
 };
 
 export const countriesActions = countriesSlice.actions;
