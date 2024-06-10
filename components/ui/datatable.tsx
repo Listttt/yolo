@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
             {filterBy != "" &&
                 <div className="flex items-center py-4">
                     <Input
-                        placeholder="TODO placeholder filter"
+                        placeholder={`Filter by ${filterBy}`}
                         value={(table.getColumn(filterBy)?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
                             table.getColumn(filterBy)?.setFilterValue(event.target.value)
