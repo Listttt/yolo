@@ -15,8 +15,7 @@ describe('"countries" slice', () => {
         afterEach(() => jest.resetAllMocks());
 
         //Not clear why action.payload is undefined in extraReducer
-        i
-        t.skip('should fetch countries', async() => {
+        it.skip('should fetch countries', async() => {
             // global.fetch.mockResolvedValue({countres: DATA_STUB})
             global.fetch.mockResolvedValue({json: () => ({data: {countres: {name: "Esonia", code: 'EE'}}})});
             const store = configureStore({reducer: countriesReducer});
