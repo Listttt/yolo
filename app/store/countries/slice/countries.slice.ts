@@ -7,9 +7,9 @@ import { CountriesStateInterface } from "../types/CountryStateInterface";
 import { CountryRecordIntreface } from "../types/CountryRecordInterface";
 import { AsyncThunk } from "@reduxjs/toolkit/react";
 
-export const fetchCountries: AsyncThunk<void, Array<TwoCapitalLettersType>, AsyncThunkConfig> = createAsyncThunk(
-    "countries/fetchCounries", async (codes: Array<TwoCapitalLettersType>, { dispatch }: GetThunkAPI<AsyncThunkConfig>) => {
-        // TODO: modyfy query string
+export const fetchCountries: AsyncThunk<void, void, AsyncThunkConfig> = createAsyncThunk<void, void, AsyncThunkConfig>(
+    "countries/fetchCounries", async (_, { dispatch }: GetThunkAPI<AsyncThunkConfig>) => {
+        //TODO: service
         const req = await fetch('https://countries.trevorblades.com/', {
             method: 'POST',
             headers: {
@@ -37,7 +37,6 @@ const countriesSlice = createSlice({
 });
 
 export const counriesSelector = (state: CountriesStateInterface): Array<CountryRecordIntreface> => {
-    debugger;
     //@ts-ignore
     return state.countries.countries;
 };

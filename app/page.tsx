@@ -1,6 +1,6 @@
 'use client'
-import { useSelector } from "react-redux";
-import React, {useEffect, useState } from "react";
+import {useSelector} from "react-redux";
+import React, {useEffect } from "react";
 import { counriesSelector, fetchCountries } from "./store/countries/slice/countries.slice";
 import { CountryRecordIntreface } from "./store/countries/types/CountryRecordInterface";
 import {DataTable} from "@/components/ui/datatable";
@@ -9,32 +9,31 @@ import {Card} from "@/components/ui/card";
 import {useAppDispatch} from "./lib/hooks";
 import {AppDispatch} from "./lib/store";
 
-type TODO = any;
+
+export const TABLE_CONFIG: Array<ColumnDef<CountryRecordIntreface> & {filterColumn?: boolean}> = [
+      {
+        accessorKey: "code",
+        header: "code",
+        filterColumn: true
+      },
+      {
+        accessorKey: "name",
+        header: "country"
+      }
+    ]
+
 export default function Page() {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const [filter, setFilter] = useState([]);
-  const countries: Array<CountryRecordIntreface> = useSelector(counriesSelector);
+  // TODO: move to separate config
+  const columns: Array<ColumnDef<CountryRecordIntreface> & {filterColumn?: boolean}> = TABLE_CONFIG;
 
+  const countries: Array<CountryRecordIntreface> = useSelector(counriesSelector);
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(fetchCountries(['AA']))
-  },[filter]);
-
-
-  const columns: Array<ColumnDef<CountryRecordIntreface> & {filterColumn?: boolean}> = [
-    {
-      accessorKey: "code",
-      header: "code",
-      filterColumn: true
-    },
-    {
-      accessorKey: "name",
-      header: "country"
-    }
-  ];
-
+    dispatch(fetchCountries())
+  },[]);
 
   return  <>
     <div className="flex justify-center">

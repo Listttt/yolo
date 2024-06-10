@@ -12,7 +12,6 @@ type TODO_CLARIFY = any;
 
 export const CountriesReducers: TODO_CLARIFY = {
     addCountries: (state: CountriesStateInterface, action: PayloadAction<Array<CountryRecordIntreface>>) => {
-        debugger;
         return {
             ...state,
             countries: action.payload

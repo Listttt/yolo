@@ -27,8 +27,8 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({
                                              columns,
-                                             data,
-                                         }: DataTableProps<TData & {filterColumn?: boolean}, TValue>) {
+                                             data
+                                         }: DataTableProps<TData , TValue & {filterColumn?: boolean}>) {
 
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
@@ -45,10 +45,10 @@ export function DataTable<TData, TValue>({
         }
     })
 
-    const filterBy = columns.find((c:TData) => c.filterColumn)?.accessorKey || "";
+    const filterBy = columns.find((c:TValue & {filterColumn?: boolean}) => c.filterColumn)?.accessorKey || "";
 
     return (
-        <div>
+        <div data-testid="data-table">
             {filterBy != "" &&
                 <div className="flex items-center py-4">
                     <Input
