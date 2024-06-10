@@ -1,5 +1,4 @@
 import {
-    ActionCreatorWithoutPayload,
     ActionReducerMapBuilder,
     createAsyncThunk,
     createSlice,
@@ -14,7 +13,6 @@ import { AsyncThunk } from "@reduxjs/toolkit/react";
 
 export const fetchCountries: AsyncThunk<void, void, AsyncThunkConfig> = createAsyncThunk<void, void, AsyncThunkConfig>(
     "countries/fetchCountries", async (_, { dispatch }: GetThunkAPI<AsyncThunkConfig>) => {
-        //TODO: service
         const response = await fetch('https://countries.trevorblades.com/', {
             method: 'POST',
             headers: {
@@ -29,7 +27,7 @@ export const fetchCountries: AsyncThunk<void, void, AsyncThunkConfig> = createAs
     }
 )
 type TODO_CLARIFY = any;
-const countriesSlice  = createSlice({
+const countriesSlice= createSlice({
     name: "countries",
     initialState,
     reducers: {

@@ -15,13 +15,11 @@ import {TABLE_CONFIG} from "./configs/datatable/config";
 export default function Page() {
   const dispatch: AppDispatch = useAppDispatch();
 
-  // TODO: move to separate config
   const columns: Array<ColumnDef<CountryRecordIntreface> & {filterColumn?: boolean}> = TABLE_CONFIG;
 
   const countries: Array<CountryRecordIntreface> = useSelector(countriesSelector);
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(fetchCountries())
   },[]);
 
