@@ -17,8 +17,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import React, {forwardRef, useState} from "react";
 import {Input} from "@/components/ui/input";
+import {useState} from "react";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -30,7 +30,7 @@ export function DataTable<TData, TValue>({
                                              data
                                          }: DataTableProps<TData , TValue & {filterColumn?: boolean}>) {
 
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
     )
 
@@ -45,6 +45,7 @@ export function DataTable<TData, TValue>({
         }
     })
 
+    //@ts-ignore
     const filterBy = columns.find((c:TValue & {filterColumn?: boolean}) => c.filterColumn)?.accessorKey || "";
 
     return (

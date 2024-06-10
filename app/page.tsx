@@ -8,19 +8,9 @@ import {ColumnDef} from "@tanstack/react-table";
 import {Card} from "@/components/ui/card";
 import {useAppDispatch} from "./lib/hooks";
 import {AppDispatch} from "./lib/store";
+import {TABLE_CONFIG} from "./configs/datatable/config";
 
 
-export const TABLE_CONFIG: Array<ColumnDef<CountryRecordIntreface> & {filterColumn?: boolean}> = [
-      {
-        accessorKey: "code",
-        header: "code",
-        filterColumn: true
-      },
-      {
-        accessorKey: "name",
-        header: "country"
-      }
-    ]
 
 export default function Page() {
   const dispatch: AppDispatch = useAppDispatch();
