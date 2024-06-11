@@ -37,5 +37,5 @@ npm run build:skiptests
 npm run start
 ```
 
-Application serverd on [http://localhost:3000](http://localhost:3000)
+Application served on [http://localhost:3000](http://localhost:3000)
 
