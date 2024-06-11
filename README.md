@@ -1,35 +1,41 @@
-# Next.js + Jest
+# Next.js + Jest + RTK + shadcn
 
-This example shows how to configure Jest to work with Next.js.
+### Hub88 [Test task](https://github.com/coingaming/hub88-fe/blob/main/README.md) (by Dmitri Tanasiitsuk)
 
-This includes Next.js' built-in support for Global CSS, CSS Modules and TypeScript. This example also shows how to use Jest with the App Router and React Server Components.
+##### requirements:
+node version - v18.19.0\
+npm version - 10.2.3
 
-> **Note:** Since tests can be co-located alongside other files inside the App Router, we have placed those tests in `app/` to demonstrate this behavior (which is different than `pages/`). You can still place all tests in `__tests__` if you prefer.
-
-## Deploy your own
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-jest&project-name=with-jest&repository-name=with-jest)
-
-## How to Use
-
-Quickly get started using [Create Next App](https://github.com/vercel/next.js/tree/canary/packages/create-next-app#readme)!
-
-In your terminal, run the following command:
-
+## Clone project
 ```bash
-npx create-next-app --example with-jest with-jest-app
+git clone https://github.com/Listttt/yolo.git
 ```
 
+go into cloned 'yolo' project and install all dependencies
 ```bash
-yarn create next-app --example with-jest with-jest-app
+npm install
 ```
 
-```bash
-pnpm create next-app --example with-jest with-jest-app
-```
-
-## Running Tests
-
+## Test, Build and Run application
+#### Running Tests
 ```bash
 npm test
 ```
+
+#### Running Build
+```bash
+npm run build
+```
+
+> **Note:** If the application is not built due to unsuccessful tests, you can try to build without tests
+```bash
+npm run build:skiptests
+```
+
+#### Serving application
+```bash
+npm run start
+```
+
+Application serverd on [http://localhost:3000](http://localhost:3000)
+
