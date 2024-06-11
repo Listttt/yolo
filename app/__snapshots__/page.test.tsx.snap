@@ -52,12 +52,17 @@ exports[`Main page renders homepage unchanged 1`] = `
               >
                 <tr
                   class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                  data-state="false"
                 >
                   <td
-                    class="p-4 align-middle [&:has([role=checkbox])]:pr-0 h-24 text-center"
-                    colspan="2"
+                    class="p-4 align-middle [&:has([role=checkbox])]:pr-0"
                   >
-                    No results.
+                    EE
+                  </td>
+                  <td
+                    class="p-4 align-middle [&:has([role=checkbox])]:pr-0"
+                  >
+                    Estonia
                   </td>
                 </tr>
               </tbody>

@@ -21,9 +21,10 @@ export const fetchCountries: AsyncThunk<void, void, AsyncThunkConfig> = createAs
             body: JSON.stringify({
                 query: `{\n  countries {\n    name\n    code\n  }\n}`
             })
-       }).then(data => data.json() );
+       });
 
-        return response.data.countries;
+        console.log("-1-1-1-1-1-1-1-1-1", response)
+        return response.json()
     }
 )
 type TODO_CLARIFY = any;
@@ -35,14 +36,14 @@ const countriesSlice= createSlice({
     },
     extraReducers: (builder: ActionReducerMapBuilder<CountriesStateInterface>): void => {
         builder.addCase(fetchCountries.fulfilled, (state, action: TODO_CLARIFY ): TODO_CLARIFY => {
-            return state.countries?.concat(action.payload) as unknown as Array<CountryRecordIntreface>
+            console.log('2-2-2-2', !!state.countries)
+            return state.countries?.concat(action.payload.data.countries) as unknown as Array<CountryRecordIntreface>
         })
     }
 });
 
 export const countriesSelector = (state: CountriesStateInterface): Array<CountryRecordIntreface> => {
     return state.countries;
-
 };
 
 export const countriesActions = countriesSlice.actions;
