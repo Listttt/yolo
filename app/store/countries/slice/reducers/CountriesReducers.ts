@@ -1,11 +1,7 @@
-import { PayloadAction } from "@reduxjs/toolkit";
+import {PayloadAction, Reducer} from "@reduxjs/toolkit";
 import { CountryRecordIntreface } from "../../types/CountryRecordInterface";
 
-
-
-type TODO_CLARIFY = any;
-
-export const CountriesReducers: TODO_CLARIFY = {
+export const CountriesReducers: { addCountries: (state, action: PayloadAction<Array<CountryRecordIntreface>>) => any } = {
     addCountries: (state, action: PayloadAction<Array<CountryRecordIntreface>>) => {
          return state.countries.concat(action.payload);
     }

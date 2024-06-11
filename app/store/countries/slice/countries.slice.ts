@@ -1,8 +1,8 @@
 import {
     ActionReducerMapBuilder,
     createAsyncThunk,
-    createSlice,
-    GetThunkAPI
+    createSlice, Draft,
+    GetThunkAPI, PayloadAction
 } from "@reduxjs/toolkit";
 import { CountriesReducers } from "./reducers/CountriesReducers";
 import {state as initialState} from './state/state';
@@ -10,6 +10,7 @@ import { AsyncThunkConfig } from "node_modules/@reduxjs/toolkit/dist/createAsync
 import { CountriesStateInterface } from "../types/CountryStateInterface";
 import { CountryRecordIntreface } from "../types/CountryRecordInterface";
 import { AsyncThunk } from "@reduxjs/toolkit/react";
+import {NoInfer} from "react-redux";
 
 export const fetchCountries: AsyncThunk<void, void, AsyncThunkConfig> = createAsyncThunk<void, void, AsyncThunkConfig>(
     "countries/fetchCountries", async (_, { dispatch }: GetThunkAPI<AsyncThunkConfig>) => {
@@ -21,13 +22,11 @@ export const fetchCountries: AsyncThunk<void, void, AsyncThunkConfig> = createAs
             body: JSON.stringify({
                 query: `{\n  countries {\n    name\n    code\n  }\n}`
             })
-       });
+        });
 
-        console.log("-1-1-1-1-1-1-1-1-1", response)
         return response.json()
     }
 )
-type TODO_CLARIFY = any;
 const countriesSlice= createSlice({
     name: "countries",
     initialState,
@@ -35,9 +34,10 @@ const countriesSlice= createSlice({
         ...CountriesReducers,
     },
     extraReducers: (builder: ActionReducerMapBuilder<CountriesStateInterface>): void => {
-        builder.addCase(fetchCountries.fulfilled, (state, action: TODO_CLARIFY ): TODO_CLARIFY => {
-            console.log('2-2-2-2', !!state.countries)
-            return state.countries?.concat(action.payload.data.countries) as unknown as Array<CountryRecordIntreface>
+        //@ts-ignore
+        builder.addCase(fetchCountries.fulfilled, (state: Draft<CountriesStateInterface>, action: PayloadAction<any> ): Draft<NoInfer<CountriesStateInterface>
+        > | unknown => {
+            return state.countries?.concat(action.payload.data.countries);
         })
     }
 });
