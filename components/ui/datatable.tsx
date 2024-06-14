@@ -45,8 +45,8 @@ export function DataTable<TData, TValue>({
         }
     })
 
-    //@ts-ignore
-    const filterBy = columns.find((c:TValue & {filterColumn?: boolean}) => c.filterColumn)?.accessorKey || "";
+    // TODO
+    const filterBy = (columns.find((c:any & {filterColumn?: boolean}) => c.filterColumn) as any)?.accessorKey || "";
 
     return (
         <div data-testid="data-table">

@@ -10,10 +10,14 @@ import { AsyncThunkConfig } from "node_modules/@reduxjs/toolkit/dist/createAsync
 import { CountriesStateInterface } from "../types/CountryStateInterface";
 import { CountryRecordIntreface } from "../types/CountryRecordInterface";
 import { AsyncThunk } from "@reduxjs/toolkit/react";
-import {NoInfer} from "react-redux";
+import {State} from "jest-circus";
+import {AppStore, RootState} from "../../../lib/store";
 
-export const fetchCountries: AsyncThunk<void, void, AsyncThunkConfig> = createAsyncThunk<void, void, AsyncThunkConfig>(
-    "countries/fetchCountries", async (_, { dispatch }: GetThunkAPI<AsyncThunkConfig>) => {
+interface ResponseInterface {
+    data: CountriesStateInterface;
+}
+export const fetchCountries: AsyncThunk<ResponseInterface, void, AsyncThunkConfig> = createAsyncThunk<ResponseInterface, void, AsyncThunkConfig>(
+    "countries/fetchCountries", async (_, { dispatch }: GetThunkAPI<AsyncThunkConfig>) : Promise<ResponseInterface> => {
         const response = await fetch('https://countries.trevorblades.com/', {
             method: 'POST',
             headers: {
@@ -24,9 +28,12 @@ export const fetchCountries: AsyncThunk<void, void, AsyncThunkConfig> = createAs
             })
         });
 
-        return response.json()
+        const payload: Promise<ResponseInterface> =  response.json();
+        return payload;
     }
-)
+);
+
+type test = typeof fetchCountries.fulfilled;
 const countriesSlice= createSlice({
     name: "countries",
     initialState,
@@ -34,16 +41,14 @@ const countriesSlice= createSlice({
         ...CountriesReducers,
     },
     extraReducers: (builder: ActionReducerMapBuilder<CountriesStateInterface>): void => {
-        //@ts-ignore
-        builder.addCase(fetchCountries.fulfilled, (state: Draft<CountriesStateInterface>, action: PayloadAction<any> ): Draft<NoInfer<CountriesStateInterface>
-        > | unknown => {
-            return state.countries?.concat(action.payload.data.countries);
+        builder.addCase(fetchCountries.fulfilled, (state: Draft<CountriesStateInterface> , action: PayloadAction<ResponseInterface> ): void => {
+            state.countries.splice(0, state.countries.length, ...action.payload.data.countries);
         })
     }
 });
 
-export const countriesSelector = (state: CountriesStateInterface): Array<CountryRecordIntreface> => {
-    return state.countries;
+export const countriesSelector = (state:RootState): Array<CountryRecordIntreface> => {
+    return state.countries.countries;
 };
 
 export const countriesActions = countriesSlice.actions;

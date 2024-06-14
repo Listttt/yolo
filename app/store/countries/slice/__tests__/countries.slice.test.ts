@@ -6,7 +6,8 @@ import {configureStore, UnknownAction} from "@reduxjs/toolkit";
 
 const {addCountries} = countriesActions;
 
-const DATA_STUB: Array<CountryRecordIntreface> = [{name: "Estonia", code: "EE"}]
+const DATA_STUB: Array<CountryRecordIntreface> = [{name: "Estonia", code: "EE"}];
+const STATE_STUB: CountriesStateInterface = {countries: DATA_STUB};
 
 describe('"countries" slice', () => {
     describe('asyncThunk fetchCountries',  () => {
@@ -15,16 +16,16 @@ describe('"countries" slice', () => {
         afterEach(() => jest.resetAllMocks());
 
         // Not clear what with state in extra reducer (during test)
-        it.skip('should fetch countries', async() => {
-            // global.fetch.mockResolvedValue({countres: DATA_STUB})
-            global.fetch.mockResolvedValue({json: () => ({data: {countres: [{name: "Esonia", code: 'EE'}]}})});
-            const store = configureStore({reducer: countriesReducer});
+        it('should fetch countries', async() => {
+            global.fetch.mockResolvedValue({json: () => ({data: STATE_STUB})});
+            const store = configureStore({reducer: {countries: countriesReducer}});
 
             await store.dispatch(fetchCountries() as UnknownAction);
 
             const state = store.getState();
+            console.log('state', JSON.stringify(state, null, 2));
 
-            expect(state.countries).toEqual(DATA_STUB);
+            expect(state.countries).toEqual(STATE_STUB);
         });
     });
 
@@ -39,7 +40,7 @@ describe('"countries" slice', () => {
         });
 
         it('should select countries', () => {
-            const state: CountriesStateInterface = {countries: DATA_STUB};
+            const state: {countries: CountriesStateInterface } = { countries: {countries: DATA_STUB}};
             expect(countriesSelector(state)).toEqual(DATA_STUB);
         });
     });

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1718103829528" clover="3.2.0">
-  <project timestamp="1718103829528" name="All files">
-    <metrics statements="94" coveredstatements="89" conditionals="11" coveredconditionals="8" methods="18" coveredmethods="16" elements="123" coveredelements="113" complexity="0" loc="94" ncloc="94" packages="8" files="13" classes="13"/>
+<coverage generated="1718390134482" clover="3.2.0">
+  <project timestamp="1718390134482" name="All files">
+    <metrics statements="95" coveredstatements="93" conditionals="11" coveredconditionals="8" methods="18" coveredmethods="18" elements="124" coveredelements="119" complexity="0" loc="95" ncloc="95" packages="8" files="13" classes="13"/>
     <package name="app">
       <metrics statements="20" coveredstatements="20" conditionals="1" coveredconditionals="1" methods="3" coveredmethods="3"/>
       <file name="StoreProvider.tsx" path="/home/dmitritan/sandbox/yolo/app/StoreProvider.tsx">
@@ -56,22 +56,23 @@
       </file>
     </package>
     <package name="app.store.countries.slice">
-      <metrics statements="13" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="2"/>
+      <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
       <file name="countries.slice.ts" path="/home/dmitritan/sandbox/yolo/app/store/countries/slice/countries.slice.ts">
-        <metrics statements="13" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="2"/>
+        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
         <line num="45" count="1" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
-        <line num="49" count="1" type="stmt"/>
-        <line num="50" count="3" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="55" count="4" type="stmt"/>
       </file>
     </package>
     <package name="app.store.countries.slice.reducers">
