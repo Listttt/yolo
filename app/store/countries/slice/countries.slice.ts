@@ -10,8 +10,7 @@ import { AsyncThunkConfig } from "node_modules/@reduxjs/toolkit/dist/createAsync
 import { CountriesStateInterface } from "../types/CountryStateInterface";
 import { CountryRecordIntreface } from "../types/CountryRecordInterface";
 import { AsyncThunk } from "@reduxjs/toolkit/react";
-import {State} from "jest-circus";
-import {AppStore, RootState} from "../../../lib/store";
+import { RootState} from "../../../lib/store";
 
 interface ResponseInterface {
     data: CountriesStateInterface;

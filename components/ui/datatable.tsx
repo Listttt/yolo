@@ -6,7 +6,7 @@ import {
     getCoreRowModel,
     useReactTable,
     ColumnFiltersState,
-    getFilteredRowModel,
+    getFilteredRowModel, AccessorColumnDef, AccessorKeyColumnDefBase,
 } from "@tanstack/react-table"
 
 import {
@@ -45,8 +45,7 @@ export function DataTable<TData, TValue>({
         }
     })
 
-    // TODO
-    const filterBy = (columns.find((c:any & {filterColumn?: boolean}) => c.filterColumn) as any)?.accessorKey || "";
+    const filterBy: string = (columns.find((c: ColumnDef<TData> & {filterColumn?: boolean, accessorKey: string}) => c.filterColumn) as AccessorKeyColumnDefBase<TData>)?.accessorKey as string || "";
 
     return (
         <div data-testid="data-table">
