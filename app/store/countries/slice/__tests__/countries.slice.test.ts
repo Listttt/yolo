@@ -23,7 +23,6 @@ describe('"countries" slice', () => {
             await store.dispatch(fetchCountries() as UnknownAction);
 
             const state = store.getState();
-            console.log('state', JSON.stringify(state, null, 2));
 
             expect(state.countries).toEqual(STATE_STUB);
         });
