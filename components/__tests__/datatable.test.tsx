@@ -124,6 +124,19 @@ describe('DataTable', () => {
             render(<DataTable columns={columnsStub} data={dataStub as unknown as Array<DataRecordInterface>}/>)
         });
 
+        it('reflects records', () => {
+            //header
+            expect(screen.getByText('key', {exact: true})).toBeInTheDocument();
+            expect(screen.getByText('value', {exact: true})).toBeInTheDocument();
+            //rows
+            //row1
+            expect(screen.getByText('record1')).toBeInTheDocument();
+            expect(screen.getByText('value1')).toBeInTheDocument();
+            //row2
+            expect(screen.getByText('record2')).toBeInTheDocument();
+            expect(screen.getByText('value2')).toBeInTheDocument();
+        });
+
         it('not reflects filter according to config', () => {
             expect(screen.queryByPlaceholderText('Filter by', {exact: false})).not.toBeInTheDocument()
         });
