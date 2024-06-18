@@ -30,6 +30,7 @@ describe('DataTable', () => {
         beforeEach(() => {
             render(<DataTable columns={columnsStub} data={dataStub as unknown as Array<DataRecordInterface>}/>)
         });
+
         it('reflects records', () => {
             //header
             expect(screen.getByText('key', {exact: true})).toBeInTheDocument();
@@ -117,7 +118,12 @@ describe('DataTable', () => {
                 accessorKey: "value",
                 header: "value",
             }
-        ]
+        ];
+
+        beforeEach(() => {
+            render(<DataTable columns={columnsStub} data={dataStub as unknown as Array<DataRecordInterface>}/>)
+        });
+
         it('not reflects filter according to config', () => {
             expect(screen.queryByPlaceholderText('Filter by', {exact: false})).not.toBeInTheDocument()
         });
