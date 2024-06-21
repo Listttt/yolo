@@ -1,6 +1,6 @@
 'use client'
 import {useSelector} from "react-redux";
-import React, {useEffect, useMemo} from "react";
+import React, {useEffect} from "react";
 import {
   countriesErrorMessageSelector,
   countriesLoadingSelector,
@@ -24,7 +24,6 @@ export default function Page() {
   const loading: boolean = useSelector(countriesLoadingSelector);
   const error: string = useSelector(countriesErrorMessageSelector);
 
-  const memC = useMemo(() => columns, [columns]);
   useEffect(() => {
     dispatch(fetchCountries())
   },[]);
