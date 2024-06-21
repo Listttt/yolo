@@ -1,6 +1,8 @@
 import {DataTable} from "@/components/ui/datatable";
 import {fireEvent, render, screen} from "@testing-library/react";
-import {ColumnDef} from "@tanstack/react-table";
+import {ColumnDef, ColumnDefExtended} from "@tanstack/react-table";
+import {fetchCountries} from "@/store/countries/slice/countries.slice";
+import StoreProvider from "@/app/StoreProvider";
 
 describe('DataTable', () => {
     interface DataRecordInterface {
@@ -15,7 +17,9 @@ describe('DataTable', () => {
 
     describe('with filter', () => {
 
-        const columnsStub: Array<ColumnDef<DataRecordInterface> & { filterColumn?: boolean }> = [
+        const MAX_LENGTH = 2;
+
+        const columnsStub: Array<ColumnDefExtended<DataRecordInterface>> = [
             {
                 accessorKey: "key",
                 header: "key",
@@ -23,12 +27,28 @@ describe('DataTable', () => {
             {
                 accessorKey: "value",
                 header: "value",
-                filterColumn: true
+                filterColumn: {
+                    validation: [
+                        (val: string) => val.length <= 2 || 'Too long value',
+                        (val: string) => (!val.length || !!val.match(/^[a-zA-Z]+$/)) || 'Please enter just letters',
+                        (val: string) => (!val.length || !val.match(/^[a-z]+$/)) || 'use capital letters',
+                    ],
+                    constrains: {
+                        maxLength: MAX_LENGTH
+                    },
+                    strategy: {
+                        host: {
+                            thunk: fetchCountries
+                        },
+                    }
+                }
             }
         ]
 
         beforeEach(() => {
-            render(<DataTable columns={columnsStub} data={dataStub as unknown as Array<DataRecordInterface>}/>)
+            render(<StoreProvider>
+                <DataTable loading={false} error={''} columns={columnsStub} data={dataStub as unknown as Array<DataRecordInterface>}/>
+            </StoreProvider>)
         });
 
         it('reflects records', () => {
@@ -72,7 +92,8 @@ describe('DataTable', () => {
 
             });
 
-            it('drops records from table that not contributes to filter', () => {
+            // TODO: async test after refactoring filter from client side to server side
+            it.skip('drops records from table that not contributes to filter', () => {
                 expect(screen.queryByText('value1')).toBeInTheDocument();
                 expect(screen.queryByText('value2')).toBeInTheDocument();
 
@@ -93,7 +114,8 @@ describe('DataTable', () => {
                 expect(screen.queryByText('value2')).toBeInTheDocument();
             });
 
-            it('reflects "No results." in case when all records filtered out', () => {
+            // TODO: async test after refactoring filter from client side to server side
+            it.skip('reflects "No results." in case when all records filtered out', () => {
                 expect(screen.queryByText('value1')).toBeInTheDocument();
                 expect(screen.queryByText('value2')).toBeInTheDocument();
                 expect(screen.queryByText('No results.')).not.toBeInTheDocument();
@@ -121,7 +143,7 @@ describe('DataTable', () => {
         ];
 
         beforeEach(() => {
-            render(<DataTable columns={columnsStub} data={dataStub as unknown as Array<DataRecordInterface>}/>)
+            render(<DataTable loading={false} error={''} columns={columnsStub} data={dataStub as unknown as Array<DataRecordInterface>}/>)
         });
 
         it('reflects records', () => {

@@ -6,6 +6,7 @@ import {BaseSyntheticEvent, FormEventHandler, useEffect, useRef, useState} from 
 import {useDispatch} from "react-redux";
 import {ValidationType} from "@/types/validation/ValidationType";
 import {FilterStrategyInterface} from "@/types/filter/FilterStrategyInterface";
+import {useAppDispatch} from "@/app/lib/hooks";
 
 export interface FilterInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -29,7 +30,7 @@ function useDebounce(callback, delay = DEBOUNCE_TIME) {
 
 const FilterInput = React.forwardRef<HTMLInputElement, FilterInputProps>(
   ({ className, validation, strategy, type, ...props }: FilterInputProps, ref) => {
-      const dispatch = !!strategy?.host?.thunk ? useDispatch(): (...params) => {};
+      const dispatch = !!strategy?.host?.thunk ? useAppDispatch(): (...params) => {};
       const [validationFn, setFn] = useState<FormEventHandler<HTMLInputElement> | undefined>(() => {}) ;
       const [message, setMessage] = useState<string>("");
 

@@ -7,7 +7,7 @@ import StoreProvider from "./StoreProvider";
 import configureStore from "redux-mock-store";
 import {thunk} from "redux-thunk";
 import { Provider } from "react-redux";
-import {fetchCountries, countriesSelector, countriesLoadingSelector, countriesErrorMessageSelector} from "./store/countries/slice/countries.slice";
+import {fetchCountries, countriesSelector, countriesLoadingSelector, countriesErrorMessageSelector} from "@/store/countries/slice/countries.slice";
 
 jest.mock('./store/countries/slice/countries.slice',() => ({
     fetchCountries: jest.fn(() => async (dispatch) => {

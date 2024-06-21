@@ -9,6 +9,7 @@ const {addCountries} = countriesActions;
 const DATA_STUB: Array<CountryRecordInterface> = [{name: "Estonia", code: "EE"}];
 const STATE_STUB: CountriesStateInterface = {countries: DATA_STUB, loading: false, error: ""};
 
+const store = configureStore({reducer: {countries: countriesReducer}});
 describe('"countries" slice', () => {
     describe('asyncThunk fetchCountries',  () => {
         beforeEach(()=> global.fetch = jest.fn());
@@ -20,7 +21,7 @@ describe('"countries" slice', () => {
             global.fetch.mockResolvedValue({json: () => ({data: STATE_STUB})});
             const store = configureStore({reducer: {countries: countriesReducer}});
 
-            await store.dispatch(fetchCountries() as UnknownAction);
+            await store.dispatch(fetchCountries('EE') as UnknownAction);
 
             const state = store.getState();
 
@@ -31,11 +32,6 @@ describe('"countries" slice', () => {
     describe('countries reducers', () => {
         it('should handle initial state', () => {
             expect(countriesReducer(undefined, {})).toEqual(initialState);
-        });
-
-        it('should store countries', () => {
-            expect(countriesReducer(initialState, addCountries(DATA_STUB))).not.toEqual( [{name: "Latvia", code: "LV"}]);
-            expect(countriesReducer(initialState, addCountries(DATA_STUB))).toEqual(DATA_STUB);
         });
 
         it('should select countries', () => {

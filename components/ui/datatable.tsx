@@ -43,7 +43,7 @@ export function DataTable<TData, TValue>({
     const findFilterColumn = columns.find(column => column.hasOwnProperty('filterColumn'));
     const filterBy: string = (findFilterColumn as AccessorKeyColumnDefBase<TData>)?.accessorKey as string || "";
 
-    const {validation, constrains, strategy}: FilterColumnInterface = (findFilterColumn as ColumnDefExtended<TData>)?.filterColumn as FilterColumnInterface;
+    const {validation, constrains, strategy}: FilterColumnInterface = (findFilterColumn as ColumnDefExtended<TData>)?.filterColumn as FilterColumnInterface || {validation: null, constrains: null, strategy: null};
 
     return (
         <div data-testid="data-table">
