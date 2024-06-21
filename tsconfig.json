@@ -38,6 +38,9 @@
       "@/store/*": [
         "app/store/*"
       ],
+      "@/service/*": [
+        "services/*"
+      ],
       "@/app/*": [
         "app/*"
       ]

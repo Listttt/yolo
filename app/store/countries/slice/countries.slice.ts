@@ -13,28 +13,15 @@ import { RootState} from "@/app/lib/store";
 import {CapitalLetterType} from "@/types/CapitalLetterType";
 import {TwoCapitalLettersType} from "@/types/TwoCapitalLettersType";
 
-import { GraphQLClient, gql } from 'graphql-request';
 import {CountriesReducers} from "@/store/countries/slice/reducers/CountriesReducers";
+import {CountryResponseInterface} from "@/service/country/types/CountryResponseInterface";
+import {fetchCountries as fetchCountriesRequest} from "@/service/country/CountryService";
 
-const GET_COUNTRIES =  gql`
-  query GetCountries($filterCriteria: String!) {
-      countries(filter: {code: {regex: $filterCriteria}}) {
-        name
-        code
-      }
-  }
-`;
 
-//@ts-ignore
-const client = new GraphQLClient(process.env.NEXT_PUBLIC_DOMAIN);
-interface ResponseInterface {
-    countries: Array<Draft<CountryRecordInterface>>;
-}
-
-export const fetchCountries: AsyncThunk<ResponseInterface, CapitalLetterType | TwoCapitalLettersType | undefined, AsyncThunkConfig> = createAsyncThunk<ResponseInterface, CapitalLetterType | TwoCapitalLettersType | undefined, AsyncThunkConfig>(
-    "countries/fetchCountries", async (filterCriteria: string = "", {}: GetThunkAPI<AsyncThunkConfig>) : Promise<ResponseInterface> => {
-        const payload = await client.request(GET_COUNTRIES, {filterCriteria});
-        return payload as unknown as Promise<ResponseInterface>;
+export const fetchCountries: AsyncThunk<CountryResponseInterface, CapitalLetterType | TwoCapitalLettersType | undefined, AsyncThunkConfig> = createAsyncThunk<CountryResponseInterface, CapitalLetterType | TwoCapitalLettersType | undefined, AsyncThunkConfig>(
+    "countries/fetchCountries", async (filterCriteria: string = "", {}: GetThunkAPI<AsyncThunkConfig>) : Promise<CountryResponseInterface> => {
+        const payload = await fetchCountriesRequest(filterCriteria);
+        return payload as unknown as Promise<CountryResponseInterface>;
     }
 );
 
@@ -55,7 +42,7 @@ const countriesSlice= createSlice({
             state.error = action.error.message;
 
         }).
-        addCase(fetchCountries.fulfilled, (state: Draft<CountriesStateInterface> , action: PayloadAction<ResponseInterface> ): void => {
+        addCase(fetchCountries.fulfilled, (state: Draft<CountriesStateInterface> , action: PayloadAction<CountryResponseInterface> ): void => {
             state.loading = false;
             state.countries.splice(0, state.countries.length, ...action.payload.countries);
         })
