@@ -2,14 +2,15 @@ import * as React from "react"
 
 import { cn } from "lib/utils"
 import {Input} from "@/components/ui/input";
-import {FilterStrategy, ValidationType} from "@/app/configs/datatable/config";
 import {BaseSyntheticEvent, FormEventHandler, useEffect, useRef, useState} from "react";
 import {useDispatch} from "react-redux";
+import {ValidationType} from "@/types/validation/ValidationType";
+import {FilterStrategyInterface} from "@/types/filter/FilterStrategyInterface";
 
 export interface FilterInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
     validation?: ValidationType,
-    strategy?: FilterStrategy
+    strategy?: FilterStrategyInterface
 }
 
 const DEBOUNCE_TIME: number = 300;

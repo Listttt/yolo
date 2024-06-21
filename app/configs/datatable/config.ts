@@ -1,38 +1,10 @@
-import {ColumnDef} from "@tanstack/react-table";
+import {ColumnDefExtended} from "@tanstack/react-table";
 import {CountryRecordInterface} from "@/store/countries/types/CountryRecordInterface";
 import {fetchCountries} from "@/store/countries/slice/countries.slice";
 
-export interface FilterHostStrategy {
-    thunk: (...params) => any
-}
-export interface FilterStrategy {
-    host?: FilterHostStrategy
-}
-//TODO: place it
-export interface InputConstrainsInterface {
-    maxLength?: number;
-}
-export type ValidationCase = (val: string | number | null) => boolean | string;
-//TODO: place it
-export type ValidationType = Array<ValidationCase>
-//TODO: place it
-export interface FilterColumnInterface {
-    validation?: ValidationType,
-    constrains: InputConstrainsInterface,
-    strategy: FilterStrategy
-}
-
-//TODO: place it
-export type FilterColumnType = boolean | FilterColumnInterface
-
-//TODO: place it
-export interface ColumnDefMixin {
-    filterColumn?: FilterColumnType
-}
-
 const MAX_LENGTH: number = 2;
 
-export const TABLE_CONFIG: Array<ColumnDef<CountryRecordInterface> & ColumnDefMixin> = [
+export const TABLE_CONFIG: Array<ColumnDefExtended<CountryRecordInterface>> = [
     {
         accessorKey: "code",
         header: "code",
@@ -50,7 +22,7 @@ export const TABLE_CONFIG: Array<ColumnDef<CountryRecordInterface> & ColumnDefMi
                     thunk: fetchCountries
                 },
             }
-        } as FilterColumnInterface
+        }
     },
     {
         accessorKey: "name",

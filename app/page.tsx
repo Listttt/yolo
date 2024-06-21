@@ -9,16 +9,16 @@ import {
 } from "@/store/countries/slice/countries.slice";
 import { CountryRecordInterface } from "@/store/countries/types/CountryRecordInterface";
 import {DataTable} from "@/components/ui/datatable";
-import {ColumnDef} from "@tanstack/react-table";
+import {ColumnDefExtended} from "@tanstack/react-table";
 import {Card} from "@/components/ui/card";
 import {useAppDispatch} from "@/app/lib/hooks";
 import {AppDispatch} from "@/app/lib/store";
-import {ColumnDefMixin, TABLE_CONFIG} from "@/app/configs/datatable/config";
+import {TABLE_CONFIG} from "@/app/configs/datatable/config";
 
 export default function Page() {
   const dispatch: AppDispatch = useAppDispatch();
 
-  const columns: Array<ColumnDef<CountryRecordInterface> & ColumnDefMixin> = TABLE_CONFIG;
+  const columns: Array<ColumnDefExtended<CountryRecordInterface>> = TABLE_CONFIG;
 
   const countries: Array<CountryRecordInterface> = useSelector(countriesSelector);
   const loading: boolean = useSelector(countriesLoadingSelector);

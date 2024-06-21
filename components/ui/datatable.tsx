@@ -5,7 +5,7 @@ import {
     flexRender,
     getCoreRowModel,
     useReactTable,
-    AccessorKeyColumnDefBase,
+    AccessorKeyColumnDefBase, ColumnDefExtended,
 } from "@tanstack/react-table"
 
 import {
@@ -17,11 +17,8 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import {FilterInput} from "@/components/ui/filterInput";
-import {
-    ColumnDefMixin,
-    FilterColumnInterface
-} from "@/app/configs/datatable/config";
 import {LoadingDataInterface} from "@/store/countries/types/CountryStateInterface";
+import {FilterColumnInterface} from "@/types/filter/FilterColumnInterface";
 
 interface DataTableProps<TData, TValue> extends LoadingDataInterface {
     columns: ColumnDef<TData, TValue>[]
@@ -46,7 +43,7 @@ export function DataTable<TData, TValue>({
     const findFilterColumn = columns.find(column => column.hasOwnProperty('filterColumn'));
     const filterBy: string = (findFilterColumn as AccessorKeyColumnDefBase<TData>)?.accessorKey as string || "";
 
-    const {validation, constrains, strategy}: FilterColumnInterface = (findFilterColumn as unknown as ColumnDefMixin)?.filterColumn as FilterColumnInterface;
+    const {validation, constrains, strategy}: FilterColumnInterface = (findFilterColumn as ColumnDefExtended<TData>)?.filterColumn as FilterColumnInterface;
 
     return (
         <div data-testid="data-table">
