@@ -1,5 +1,7 @@
-import { CountriesStateInterface } from "../../types/CountryStateInterface";
+import { CountriesStateInterface } from "@/store/countries/types/CountryStateInterface";
 
 export const state: CountriesStateInterface  = {
-    countries: []
+    countries: [],
+    loading: false,
+    error: ""
 };

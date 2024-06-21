@@ -5,8 +5,7 @@ import {
     flexRender,
     getCoreRowModel,
     useReactTable,
-    ColumnFiltersState,
-    getFilteredRowModel, AccessorColumnDef, AccessorKeyColumnDefBase,
+    AccessorKeyColumnDefBase,
 } from "@tanstack/react-table"
 
 import {
@@ -17,46 +16,47 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {Input} from "@/components/ui/input";
-import {useState} from "react";
+import {FilterInput} from "@/components/ui/filterInput";
+import {
+    ColumnDefMixin,
+    FilterColumnInterface
+} from "@/app/configs/datatable/config";
+import {LoadingDataInterface} from "@/store/countries/types/CountryStateInterface";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData, TValue> extends LoadingDataInterface {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
 export function DataTable<TData, TValue>({
                                              columns,
-                                             data
-                                         }: DataTableProps<TData , TValue & {filterColumn?: boolean}>) {
+                                             data,
+                                             loading,
+                                             error
+                                         }: DataTableProps<TData, TValue>) {
 
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-        []
-    )
 
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        onColumnFiltersChange: setColumnFilters,
-        getFilteredRowModel: getFilteredRowModel(),
-        state: {
-            columnFilters
-        }
-    })
+    });
 
-    const filterBy: string = (columns.find((c: ColumnDef<TData> & {filterColumn?: boolean, accessorKey: string}) => c.filterColumn) as AccessorKeyColumnDefBase<TData>)?.accessorKey as string || "";
+
+    const findFilterColumn = columns.find(column => column.hasOwnProperty('filterColumn'));
+    const filterBy: string = (findFilterColumn as AccessorKeyColumnDefBase<TData>)?.accessorKey as string || "";
+
+    const {validation, constrains, strategy}: FilterColumnInterface = (findFilterColumn as unknown as ColumnDefMixin)?.filterColumn as FilterColumnInterface;
 
     return (
         <div data-testid="data-table">
             {filterBy != "" &&
                 <div className="flex items-center py-4">
-                    <Input
+                    <FilterInput
                         placeholder={`Filter by ${filterBy}`}
-                        value={(table.getColumn(filterBy)?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            table.getColumn(filterBy)?.setFilterValue(event.target.value)
-                        }
+                        maxLength={constrains?.maxLength}
+                        validation={validation}
+                        strategy={strategy}
                         className="max-w-sm"
                     />
                 </div>
@@ -82,7 +82,20 @@ export function DataTable<TData, TValue>({
                         ))}
                     </TableHeader>
                     <TableBody>
-                        {table.getRowModel().rows?.length ? (
+                        {
+                            error ?
+                                <TableRow>
+                                    <TableCell colSpan={columns.length} className="h-24 text-center">
+                                        {error}
+                                    </TableCell>
+                                </TableRow> :
+                                loading ?
+                                    <TableRow>
+                                        <TableCell colSpan={columns.length} className="h-24 text-center">
+                                            Loading...
+                                        </TableCell>
+                                    </TableRow> :
+                            table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
                                     key={row.id}

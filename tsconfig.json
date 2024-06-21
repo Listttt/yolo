@@ -34,6 +34,12 @@
       ],
       "@/types/*": [
         "types/*"
+      ],
+      "@/store/*": [
+        "app/store/*"
+      ],
+      "@/app/*": [
+        "app/*"
       ]
     },
     "plugins": [

@@ -1,13 +1,13 @@
 import {countriesReducer, countriesActions, countriesSelector, fetchCountries} from "../countries.slice";
-import {state as initialState} from '../state/state';
-import {CountryRecordIntreface} from "../../types/CountryRecordInterface";
-import {CountriesStateInterface} from "../../types/CountryStateInterface";
+import {state as initialState} from '@/store/countries/slice/state/state';
+import {CountryRecordInterface} from "@/store/countries/types/CountryRecordInterface";
+import {CountriesStateInterface} from "@/store/countries/types/CountryStateInterface";
 import {configureStore, UnknownAction} from "@reduxjs/toolkit";
 
 const {addCountries} = countriesActions;
 
-const DATA_STUB: Array<CountryRecordIntreface> = [{name: "Estonia", code: "EE"}];
-const STATE_STUB: CountriesStateInterface = {countries: DATA_STUB};
+const DATA_STUB: Array<CountryRecordInterface> = [{name: "Estonia", code: "EE"}];
+const STATE_STUB: CountriesStateInterface = {countries: DATA_STUB, loading: false, error: ""};
 
 describe('"countries" slice', () => {
     describe('asyncThunk fetchCountries',  () => {
@@ -39,7 +39,7 @@ describe('"countries" slice', () => {
         });
 
         it('should select countries', () => {
-            const state: {countries: CountriesStateInterface } = { countries: {countries: DATA_STUB}};
+            const state: {countries: CountriesStateInterface } = { countries: {countries: DATA_STUB, loading: false, error: ""}};
             expect(countriesSelector(state)).toEqual(DATA_STUB);
         });
     });
